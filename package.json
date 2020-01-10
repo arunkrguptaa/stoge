@@ -1,0 +1,25 @@
+{
+  "name": "stoge",
+  "version": "1.0.0",
+  "description": "utility library for common tasks in javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arunkrguptaa/stoge.git"
+  },
+  "keywords": [
+    "utility-library",
+    "javascript",
+    "stogejs",
+    "stoge"
+  ],
+  "author": "arun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arunkrguptaa/stoge/issues"
+  },
+  "homepage": "https://github.com/arunkrguptaa/stoge#readme"
+}
