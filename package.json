@@ -1,6 +1,6 @@
 {
   "name": "stoge",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "utility library for common tasks in javascript",
   "main": "stoge.js",
   "scripts": {
