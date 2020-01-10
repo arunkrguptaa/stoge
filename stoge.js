@@ -1,7 +1,9 @@
 (function(){
+    
+    var stoge = {};
 
     var arrProto = Array.prototype;
-    var coreJoin = arrProto.join
+    var coreJoin = arrProto.join;
 
     //Array Methods
 
@@ -9,6 +11,10 @@
     function join(arr, liner) {
         return arr == null ? '' : coreJoin.call(arr, liner);
     }
-   
 
-}.call(this))
+    // namespace for stoge methods
+    stoge.join = join;
+
+    return stoge;
+
+}.call(this));
