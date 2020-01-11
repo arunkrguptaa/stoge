@@ -10,7 +10,9 @@ module.exports = (function(){
     }
 
     // namespace for stoge methods
-    var stoge = {join};
+    var stoge = {
+        join
+    };
     return stoge;
 
 }.call(this));
