@@ -1,7 +1,4 @@
-(function(){
-    
-    var stoge = {};
-
+module.exports = (function(){
     var arrProto = Array.prototype;
     var coreJoin = arrProto.join;
 
@@ -13,8 +10,7 @@
     }
 
     // namespace for stoge methods
-    stoge.join = join;
-
+    var stoge = {join};
     return stoge;
 
 }.call(this));
