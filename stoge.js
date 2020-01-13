@@ -13,11 +13,24 @@ module.exports = (function(){
         return arr == null ? '' : coreJoin.call(arr, liner);
     }
 
+    //Number Methods
+
+    function random(num){
+        return (typeof num == 'number')
+        ? Math.floor(Math.random() * num)
+        : num;
+    }
+    
+
     //String Methods
 
     // ex 'abc@abc.org' => true
-    function isMail(str) {
-        return (typeof str == 'string') ? mailRegex.test(str) : false
+    function isMail(str,pattern) {
+        return (typeof str == 'string') 
+        ? (pattern) 
+            ? pattern.test(str) 
+            : mailRegex.test(str) 
+        : false
     }
 
     // ex - lower => l o w e r
@@ -29,16 +42,51 @@ module.exports = (function(){
 
     // ex xyz@$#(),;!$%^&*+-_.+=abc => xyzabc
     function mediocre(str){
-        return (typeof str !== 'string') 
-        ? str.toString()
-        : str.replace(/[^a-zA-Z0-9 ]/g,'');
+        return (typeof str == 'string') 
+        ? str.replace(/[^a-zA-Z0-9 ]/g,'')
+        : str;
     }
 
     // ex xyz@$#(),;!$%^&*+-_.+=abc => @$#(),;!$%^&*+-_.=+
-    function special(str){
-        return (typeof str !== 'string') 
-        ? str.toString()
-        : str.replace(/[a-zA-Z0-9 ]/g,'');
+    function specialChar(str){
+        return (typeof str == 'string') 
+        ? str.replace(/[a-zA-Z0-9 ]/g,'')
+        : str;
+    }
+
+    // ex BLUNT => Blunt
+    function capitalize(str){
+        return (typeof str == 'string')
+        ? str.charAt(0).toUpperCase()+str.slice(1).toLowerCase()
+        : str;
+    }
+
+    // ex 'abc def ghi' => abcDefGhi
+    function camel(str){
+        return (typeof str == 'string')
+        ? str.trim().split(' ').map((e,i) => (i!==0) ? capitalize(e) : e).join('')
+        : str;
+    }
+
+    // ex 'abc def ghi' => abc_def_ghi
+    function snake(str){
+        return (typeof str == 'string')
+        ? str.trim().split(' ').join('_')
+        : str;
+    }
+
+    // ex 'abc def ghi' => abc_def_ghi
+    function kebab(str){
+        return (typeof str == 'string')
+        ? str.trim().split(' ').join('-')
+        : str;
+    }
+
+    // ex 'abc def ghi' => abc_def_ghi
+    function pascal(str){
+        return (typeof str == 'string')
+        ? str.trim().split(' ').map((e,i) => capitalize(e)).join('')
+        : str;
     }
     
     // namespace for stoge methods
@@ -46,12 +94,20 @@ module.exports = (function(){
         //Array methods namespace
         join,
 
+        //Number methods namespace
+        random,
+
         //String methods namespace
         isMail,
         distinct,
         mediocre,
-        special,
-        
+        specialChar,
+        capitalize,
+        camel,
+        snake,
+        kebab,
+        pascal,
+        snakeUpper
     };
     return stoge;
 
