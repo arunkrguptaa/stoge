@@ -3,7 +3,7 @@ module.exports = (function(){
     var arrProto = Array.prototype;
     var coreJoin = arrProto.join;
 
-    // Method specific variables
+    // Method specific variables 
     var mailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,6}$/;
 
     //Array Methods
