@@ -5,6 +5,22 @@ module.exports = (function(){
 
     // Method specific variables 
     var mailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,6}$/;
+    var htmlEntities = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    }
+    var htmlSymbol = {
+        '&amp;': '&',
+        '&lt;': '<',
+        '&gt;': '>',
+        '&quot;': '"',
+        '&#39;': "'"
+    }
+    var htmlescapeRegex = /[&<>"']/g;
+    var unescapeHtml = /&(?:amp|lt|gt|quot|#39);/g
 
     //Array Methods
 
@@ -18,7 +34,7 @@ module.exports = (function(){
     function random(num){
         return (typeof num == 'number')
         ? Math.floor(Math.random() * num)
-        : num;
+        : (num || '');
     }
     
 
@@ -35,58 +51,71 @@ module.exports = (function(){
 
     // ex - lower => l o w e r
     function distinct(str){
-        return (typeof str !== 'string') 
-        ? str.toString()
-        : str.split('').join(' ').trim();
+        return (typeof str == 'string') 
+        ? str.split('').join(' ').trim()
+        : (str || '');
     }
 
     // ex xyz@$#(),;!$%^&*+-_.+=abc => xyzabc
     function mediocre(str){
         return (typeof str == 'string') 
         ? str.replace(/[^a-zA-Z0-9 ]/g,'')
-        : str;
+        : (str || '');
     }
 
     // ex xyz@$#(),;!$%^&*+-_.+=abc => @$#(),;!$%^&*+-_.=+
     function specialChar(str){
         return (typeof str == 'string') 
         ? str.replace(/[a-zA-Z0-9 ]/g,'')
-        : str;
+        : (str || '');
     }
 
     // ex BLUNT => Blunt
     function capitalize(str){
         return (typeof str == 'string')
         ? str.charAt(0).toUpperCase()+str.slice(1).toLowerCase()
-        : str;
+        : (str || '');
     }
 
     // ex 'abc def ghi' => abcDefGhi
     function camel(str){
         return (typeof str == 'string')
         ? str.trim().split(' ').map((e,i) => (i!==0) ? capitalize(e) : e).join('')
-        : str;
+        : (str || '');
     }
 
     // ex 'abc def ghi' => abc_def_ghi
     function snake(str){
         return (typeof str == 'string')
         ? str.trim().split(' ').join('_')
-        : str;
+        : (str || '');
     }
 
     // ex 'abc def ghi' => abc_def_ghi
     function kebab(str){
         return (typeof str == 'string')
         ? str.trim().split(' ').join('-')
-        : str;
+        : (str || '');
     }
 
     // ex 'abc def ghi' => abc_def_ghi
     function pascal(str){
         return (typeof str == 'string')
         ? str.trim().split(' ').map((e,i) => capitalize(e)).join('')
-        : str;
+        : (str || '');
+    }
+
+    // ex 'abc&><def' => 'abc&amp;&gt;&lt;def'
+    function escape(str){
+        return (typeof str == 'string')
+        ? str.replace(htmlescapeRegex, (chr) => htmlEntities[chr])
+        : (str || '');
+    }
+    // ex 'abc&amp;&gt;&lt;def' => 'abc&><def'
+    function unescape(str, htmlescapeRegex){
+        return (typeof str == 'string')
+        ? str.replace(unescapeHtml, (chr) => htmlSymbol[chr])
+        : (str || '');
     }
     
     // namespace for stoge methods
@@ -106,7 +135,9 @@ module.exports = (function(){
         camel,
         snake,
         kebab,
-        pascal
+        pascal,
+        escape,
+        unescape
     };
     return stoge;
 
