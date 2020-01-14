@@ -106,8 +106,7 @@ module.exports = (function(){
         camel,
         snake,
         kebab,
-        pascal,
-        snakeUpper
+        pascal
     };
     return stoge;
 
