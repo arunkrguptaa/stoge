@@ -31,9 +31,26 @@ module.exports = (function(){
 
     //Number Methods
 
-    function random(num){
-        return (typeof num == 'number')
-        ? Math.floor(Math.random() * num)
+    // ex range(2,1,5) => true
+    function range(num, low, upp){
+        if(low == undefined && upp == undefined){
+            return true;
+        }
+        if(upp == undefined){
+            upp = low;
+            low = 0;
+        }
+        if(typeof num == 'number' && typeof low == 'number' && typeof upp == 'number'){
+            return (num > low && num < upp) ? true : false
+        }else {
+            return false
+        }
+    }
+    
+    // ex random(1,3) => 3
+    function random(s, e){
+        return (typeof s == 'number' && typeof e == 'number')
+        ? Math.floor(Math.random() * (e-s+1) + s)
         : (num || '');
     }
     
@@ -125,6 +142,7 @@ module.exports = (function(){
 
         //Number methods namespace
         random,
+        range,
 
         //String methods namespace
         isMail,
