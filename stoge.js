@@ -28,6 +28,13 @@ module.exports = (function(){
     function join(arr, liner) {
         return arr == null ? '' : coreJoin.call(arr, liner);
     }
+    
+    // ex stoge.join([1,2,3], '|') => '1|2|3'
+    function removeFalsy(arr) {
+        return typeof arr === 'object'
+        ? arr.filter(Boolean)
+        : (arr || '')
+    }
 
     //Math Methods
 
@@ -218,7 +225,8 @@ module.exports = (function(){
     var stoge = {
         //Array methods namespace
         join,
-
+        removeFalsy,
+        
         //Math methods namespace
         average,
         round,
