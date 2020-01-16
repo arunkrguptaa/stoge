@@ -29,6 +29,21 @@ module.exports = (function(){
         return arr == null ? '' : coreJoin.call(arr, liner);
     }
 
+    //Math Methods
+
+    // ex [1,2,3] => 1
+    function average(arr) {
+        return (typeof arr === 'object')
+        ? arr.reduce((t,e) => (t+e))/str.length
+        : (arr || '')
+    }
+    
+    // ex #00FF00
+    function randomHexColorCode() {
+        var n = (Math.random() * 0xfffff * 1000000).toString(16);
+        return '#' + n.slice(0, 6);
+    };
+
     //Number Methods
 
     // ex range(2,1,5) => true
@@ -91,7 +106,7 @@ module.exports = (function(){
     }
 
     // ex xyz@$#(),;!$%^&*+-_.+=abc => xyzabc
-    function mediocre(str){
+    function mediochar(str){
         return (typeof str === 'string') 
         ? str.replace(/[^a-zA-Z0-9 ]/g,'')
         : (str || '');
@@ -145,17 +160,55 @@ module.exports = (function(){
         ? str.replace(htmlescapeRegex, (chr) => htmlEntities[chr])
         : (str || '');
     }
+
     // ex 'abc&amp;&gt;&lt;def' => 'abc&><def'
-    function unescape(str, htmlescapeRegex){
+    function unescape(str){
         return (typeof str === 'string')
         ? str.replace(unescapeHtml, (chr) => htmlSymbol[chr])
         : (str || '');
+    }
+
+    // ex 'abc def GHI' => 'GHI def abc'
+    function partialReverse(str){
+        return (typeof str === 'string')
+        ? str.split(' ').reverse().map(e => capitalizeUpper(e)).join(' ')
+        : (str || '')
+    }
+
+    // ex 'abc def GHI' => 'IHG fed cba'
+    function completeReverse(str){
+        return (typeof str === 'string')
+        ? str.split(' ').reverse().map(e => e.split('').reverse().join('')).join(' ')
+        : (str || '')
+    }
+
+    // ex  'a,b\nc,d' => [[a,b], [c,d]]
+    function csvToArray(str, deli = ',', omitHeader = false){
+        return (typeof str === 'string')
+        ? str.slice(omitHeader ? str.indexOf('\n') + 1 : 0).split('\n').map(e => e.split(deli))
+        : (str || '')
+    }
+    
+    // ex  'a,b\nc,d' => {a: 'c', b: 'd'}
+    function csvToJson(str, deli = ','){
+        if(typeof str === 'string'){
+            var titles = str.slice(0, str.indexOf('\n')).split(deli);
+            return str.slice(str.indexOf('\n') + 1).split('\n').map(v => {
+                var values = v.split(deli);
+                return titles.reduce((obj, title, index) => ((obj[title] = values[index]), obj), {});
+            });
+        }else (str || '')
     }
     
     // namespace for stoge methods
     var stoge = {
         //Array methods namespace
         join,
+
+        //Math methods namespace
+        average,
+        round,
+        randomHexColorCode,
 
         //Number methods namespace
         random,
@@ -166,7 +219,7 @@ module.exports = (function(){
         //String methods namespace
         isMail,
         distinct,
-        mediocre,
+        mediochar,
         specialChar,
         capitalize,
         camel,
@@ -174,7 +227,11 @@ module.exports = (function(){
         kebab,
         pascal,
         escape,
-        unescape
+        unescape,
+        partialReverse,
+        completeReverse,
+        csvToArray,
+        csvToJson
     };
     return stoge;
 
