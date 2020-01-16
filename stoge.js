@@ -229,7 +229,6 @@ module.exports = (function(){
         
         //Math methods namespace
         average,
-        round,
         randomHexColorCode,
 
         //Number methods namespace
