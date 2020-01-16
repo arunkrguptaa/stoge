@@ -119,10 +119,24 @@ module.exports = (function(){
         : (str || '');
     }
 
+    // ex 'äÄçÇéÉêabcdöÖÐþúÚ' => abc
+    function nonASCII(str){
+        return (typeof str === 'string') 
+        ? str.replace(/[^\x20-\x7E]/g, '')
+        : (str || '');
+    }
+
     // ex BLUNT => Blunt
     function capitalize(str){
         return (typeof str === 'string')
         ? str.charAt(0).toUpperCase()+str.slice(1).toLowerCase()
+        : (str || '');
+    }
+
+    // ex Blunt => bLUNT
+    function dCapitalize(str){
+        return (typeof str === 'string')
+        ? str.charAt(0).toLowerCase()+str.slice(1).toUpperCase()
         : (str || '');
     }
 
@@ -221,7 +235,9 @@ module.exports = (function(){
         distinct,
         mediochar,
         specialChar,
+        nonASCII,
         capitalize,
+        dCapitalize,
         camel,
         snake,
         kebab,
