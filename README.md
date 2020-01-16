@@ -37,8 +37,8 @@ Note: add --save if you are using npm < 5.0.0
 In Node.js:
 ```js
 // Load methods for smaller bundles.
-var {join} = require('stoge');
-var join = require('stoge/join');
+var {csvToJson} = require('csvToJson');
+var csvToJson = require('stoge/csvToJson');
 ```
 
 ## Why Stoge?
