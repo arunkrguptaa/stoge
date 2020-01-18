@@ -1,7 +1,7 @@
 // ex [1,2,3] => 1
 function average(arr) {
-    return (typeof arr === 'object')
-    ? arr.reduce((t,e) => (t+e))/str.length
+    return (toString.call(arr) === '[object Array]')
+    ? arr.reduce((t,e) => (t+e))/arr.length
     : (arr || '')
 }
 

@@ -36,8 +36,12 @@ Note: add --save if you are using npm < 5.0.0
 
 In Node.js:
 ```js
+
+// Load methods for global.
+var stoge = require('stoge');
+
 // Load methods for smaller bundles.
-var {csvToJson} = require('csvToJson');
+var {csvToJson} = require('stoge');
 var csvToJson = require('stoge/csvToJson');
 ```
 

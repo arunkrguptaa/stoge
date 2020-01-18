@@ -20,7 +20,9 @@ module.exports = (function(){
         '&#39;': "'"
     },
     htmlescapeRegex = /[&<>"']/g;
-    var unescapeHtml = /&(?:amp|lt|gt|quot|#39);/g
+    var unescapeHtml = /&(?:amp|lt|gt|quot|#39);/g;
+    var UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    LOWER = 'abcdefghijklmnopqrstuvwxyz';
 
     //Array Methods
 
@@ -31,17 +33,37 @@ module.exports = (function(){
     
     // ex stoge.join([1,2,3], '|') => '1|2|3'
     function removeFalsy(arr) {
-        return typeof arr === 'object'
+        return typeof (toString.call(arr) === '[object Array]')
         ? arr.filter(Boolean)
         : (arr || '')
+    }
+
+    // ex [1,2,3] => true
+    function isArray(arr) {
+        return (toString.call(arr) === '[object Array]') ? true : false
+    }
+
+    // ex [1,2,3,4] => [4,1,3,2]
+    function shuffleArr(arr){
+        if(toString.call(arr) === '[object Array]'){
+            var ctr = arra1.length, temp, index;
+            while (ctr > 0) {
+                index = Math.floor(Math.random() * ctr);
+                ctr--;
+                temp = arra1[ctr];
+                arra1[ctr] = arra1[index];
+                arra1[index] = temp;
+            }
+            return arra1;
+        } else return arr;
     }
 
     //Math Methods
 
     // ex [1,2,3] => 1
     function average(arr) {
-        return (typeof arr === 'object')
-        ? arr.reduce((t,e) => (t+e))/str.length
+        return (toString.call(arr) === '[object Array]')
+        ? arr.reduce((t,e) => (t+e))/arr.length
         : (arr || '')
     }
     
@@ -71,9 +93,13 @@ module.exports = (function(){
     
     // ex random(1,3) => 3
     function random(s, e){
+        if(e === undefined){
+            e=s;
+            s=0;
+        }
         return (typeof s === 'number' && typeof e === 'number')
         ? Math.floor(Math.random() * (e-s+1) + s)
-        : (num || '');
+        : (s || '');
     }
 
     // ex 140 => 60
@@ -221,11 +247,26 @@ module.exports = (function(){
         }else (str || '')
     }
     
+    // ex  ADcfRD1231 => adCFrd1231
+    function swapCase(str){
+        if(typeof str === 'string'){
+            return str.split('').map(
+                e => (UPPER.indexOf(e)!==-1) 
+                ? e.toLowerCase() 
+                : (LOWER.indexOf(e) !== -1) 
+                ? e.toUpperCase() 
+                : e
+            ).join('')
+        }else (str || '')
+    }
+    
     // namespace for stoge methods
     var stoge = {
         //Array methods namespace
         join,
         removeFalsy,
+        isArray,
+        shuffleArr,
         
         //Math methods namespace
         average,
@@ -254,7 +295,8 @@ module.exports = (function(){
         partialReverse,
         completeReverse,
         csvToArray,
-        csvToJson
+        csvToJson,
+        swapCase 
     };
     return stoge;
 
