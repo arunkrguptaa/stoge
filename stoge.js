@@ -1,7 +1,5 @@
 module.exports = (function(){
     // Native variables
-    var arrProto = Array.prototype,
-    coreJoin = arrProto.join;
 
     // Method specific variables 
     var mailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,6}$/;
@@ -26,36 +24,71 @@ module.exports = (function(){
 
     //Array Methods
 
-    // ex stoge.join([1,2,3], '|') => '1|2|3'
-    function join(arr, liner) {
-        return arr == null ? '' : coreJoin.call(arr, liner);
-    }
-    
-    // ex stoge.join([1,2,3], '|') => '1|2|3'
-    function removeFalsy(arr) {
-        return typeof (toString.call(arr) === '[object Array]')
-        ? arr.filter(Boolean)
-        : (arr || '')
-    }
-
     // ex [1,2,3] => true
     function isArray(arr) {
         return (toString.call(arr) === '[object Array]') ? true : false
     }
+    
+    // ex stoge.removeFalsy([1,'',2,false,3]) => [1,2,3]
+    function removeFalsy(arr) {
+        return (isArray(arr))
+        ? arr.filter(Boolean)
+        : (arr || '')
+    }
 
     // ex [1,2,3,4] => [4,1,3,2]
     function shuffleArr(arr){
-        if(toString.call(arr) === '[object Array]'){
-            var ctr = arra1.length, temp, index;
+        if(isArray(arr)){
+            var ctr = arr.length, temp, index;
             while (ctr > 0) {
                 index = Math.floor(Math.random() * ctr);
                 ctr--;
-                temp = arra1[ctr];
-                arra1[ctr] = arra1[index];
-                arra1[index] = temp;
+                temp = arr[ctr];
+                arr[ctr] = arr[index];
+                arr[index] = temp;
             }
-            return arra1;
+            return arr;
         } else return arr;
+    }
+
+    // ex [1,2,3,4] => 4(3)
+    function binarySearch(arr, val){
+        if(isArray(arr) && val){
+            var first  = 0,
+            last   = arr.length - 1,
+            middle = Math.floor((last + first)/2);
+            while(arr[middle] != val && first < last)
+            {
+            if (val < arr[middle]){
+                    last = middle - 1;
+                } 
+            else if (val > arr[middle]){
+                    first = middle + 1;
+                }
+                middle = Math.floor((last + first)/2);
+            }
+            return (arr[middle] != val) ? -1 : middle;
+        } else return -1;
+    }
+    
+    // [1,2,3]+[4,5] => [5,7,3]
+    function arraySum(arr1, arr2){
+        if(arr1 && arr2 === undefined){
+            return arr1;
+        }
+        else if(isArray(arr1) && isArray(arr2)){
+            var i=0,len1= arr1.length,
+            len2= arr2.length,
+            maxLen = len1<len2 ? len2 : len1, final=[];
+            for(i;i<maxLen;i++){
+                final.push(
+                    ((arr1[i]) ? arr1[i] : ((typeof arr2[i] === 'number') ? 0 : '')) + 
+                    ((arr2[i]) ? arr2[i] : ((typeof arr1[i] === 'number') ? 0 : ''))
+                )
+            }
+            return final;
+        }
+        else return [];
     }
 
     //Math Methods
@@ -118,6 +151,21 @@ module.exports = (function(){
             ? parseFloat(((9*(c/5))+32).toFixed(fixed))
             : ((9*(c/5))+32)
         : (c || '');
+    }
+
+    // arrayRange(6, 4) => [6,7,8,9]
+    function arrayRange(s, l){
+        if(l === undefined){
+            l=s;
+            s=0;
+        }
+        if(typeof s === 'number' && typeof l === 'number'){
+            var arr = new Array(l), i = 0;
+            for(i; i < l; i++, s++){
+                arr[i] = s;
+            }
+            return arr;
+        }else return []
     }
 
     //String Methods
@@ -267,6 +315,8 @@ module.exports = (function(){
         removeFalsy,
         isArray,
         shuffleArr,
+        binarySearch,
+        arraySum,
         
         //Math methods namespace
         average,
@@ -276,7 +326,8 @@ module.exports = (function(){
         random,
         range,
         fToCelsius,
-        cToFahrenheit,       
+        cToFahrenheit,
+        arrayRange,
 
         //String methods namespace
         isMail,

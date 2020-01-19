@@ -1,6 +1,9 @@
-// ex stoge.join([1,2,3], '|') => '1|2|3'
+
+var isArray = require('./isArray');
+
+// ex stoge.removeFalsy([1,'',2,false,3]) => [1,2,3]
 function removeFalsy(arr) {
-    return typeof (toString.call(arr) === '[object Array]')
+    return (isArray(arr))
     ? arr.filter(Boolean)
     : (arr || '')
 }
