@@ -311,7 +311,6 @@ module.exports = (function(){
     // namespace for stoge methods
     var stoge = {
         //Array methods namespace
-        join,
         removeFalsy,
         isArray,
         shuffleArr,
