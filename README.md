@@ -2,7 +2,7 @@
 Utility library for common task in javascript
 
 [Site](https://stoge.com/) | (Upcomming) |
-[Docs](https://stoge.com/docs) | (Upcomming) |
+[Docs](https://stoge.readthedocs.io/) |
 [Code of Conduct](https://js.foundation/community/code-of-conduct) |
 [Twitter](https://twitter.com/arunkrguptaa)
 
