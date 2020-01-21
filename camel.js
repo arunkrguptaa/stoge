@@ -1,3 +1,5 @@
+var capitalize = require('./capitalize');
+
 // ex 'abc def ghi' => abcDefGhi
 function camel(str){
     return (typeof str === 'string')

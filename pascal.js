@@ -1,3 +1,5 @@
+var capitalize = require('./capitalize');
+
 // ex 'abc def ghi' => abc_def_ghi
 function pascal(str){
     return (typeof str === 'string')
