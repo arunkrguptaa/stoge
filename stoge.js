@@ -91,9 +91,28 @@ module.exports = (function(){
         else return [];
     }
 
-    //Collection Methods
+    //Looping Methods
 
+    //map([1,2,3],e => e+2)  =>  [3,4,5]
+    function map(array, iteratee){
+        var index = 0,
+        length = array == null ? 0 : array.length,
+        result = new Array(length);
+        for (index;index < length;index++) {
+            result[index] = iteratee(array[index], index, array)
+        }
+        return result;
+    }
     
+
+    function each(array, iteratee){
+        var index = 0,
+        length = array == null ? 0 : array.length,
+        result = new Array(length);
+        for (index;index < length;index++) {
+           iteratee(array[index], index, array)
+        }
+    }
 
     //Math Methods
 
@@ -228,7 +247,7 @@ module.exports = (function(){
     // ex 'abc def ghi' => abcDefGhi
     function camel(str){
         return (typeof str === 'string')
-        ? str.trim().split(' ').map((e,i) => (i!==0) ? capitalize(e) : e).join('')
+        ? map(str.trim().split(' '), (e,i) => (i!==0) ? capitalize(e) : e).join('')
         : (str || '');
     }
 
@@ -249,7 +268,7 @@ module.exports = (function(){
     // ex 'abc def ghi' => abc_def_ghi
     function pascal(str){
         return (typeof str === 'string')
-        ? str.trim().split(' ').map((e,i) => capitalize(e)).join('')
+        ? map(str.trim().split(' '), (e,i) => capitalize(e)).join('')
         : (str || '');
     }
 
@@ -270,21 +289,21 @@ module.exports = (function(){
     // ex 'abc def GHI' => 'GHI def abc'
     function partialReverse(str){
         return (typeof str === 'string')
-        ? str.split(' ').reverse().map(e => capitalizeUpper(e)).join(' ')
+        ? map(str.split(' ').reverse(), e => e).join(' ')
         : (str || '')
     }
 
     // ex 'abc def GHI' => 'IHG fed cba'
     function completeReverse(str){
         return (typeof str === 'string')
-        ? str.split(' ').reverse().map(e => e.split('').reverse().join('')).join(' ')
+        ? map(str.split(' ').reverse(), e => e.split('').reverse().join('')).join(' ')
         : (str || '')
     }
 
-    // ex  'a,b\nc,d' => [[a,b], [c,d]]
+        // ex  'a,b\nc,d' => [[a,b], [c,d]]
     function csvToArray(str, deli = ',', omitHeader = false){
         return (typeof str === 'string')
-        ? str.slice(omitHeader ? str.indexOf('\n') + 1 : 0).split('\n').map(e => e.split(deli))
+        ? map(str.slice(omitHeader ? str.indexOf('\n') + 1 : 0).split('\n'), e => e.split(deli))
         : (str || '')
     }
     
@@ -292,7 +311,7 @@ module.exports = (function(){
     function csvToJson(str, deli = ','){
         if(typeof str === 'string'){
             var titles = str.slice(0, str.indexOf('\n')).split(deli);
-            return str.slice(str.indexOf('\n') + 1).split('\n').map(v => {
+            return map(str.slice(str.indexOf('\n') + 1).split('\n'), v => {
                 var values = v.split(deli);
                 return titles.reduce((obj, title, index) => ((obj[title] = values[index]), obj), {});
             });
@@ -302,7 +321,7 @@ module.exports = (function(){
     // ex  ADcfRD1231 => adCFrd1231
     function swapCase(str){
         if(typeof str === 'string'){
-            return str.split('').map(
+            return map(str.split(''),
                 e => (UPPER.indexOf(e)!==-1) 
                 ? e.toLowerCase() 
                 : (LOWER.indexOf(e) !== -1) 
@@ -320,6 +339,10 @@ module.exports = (function(){
         shuffleArr,
         binarySearch,
         arraySum,
+
+        //Looping methods
+        map,
+        each,
         
         //Math methods namespace
         average,
