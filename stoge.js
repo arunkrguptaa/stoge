@@ -91,6 +91,10 @@ module.exports = (function(){
         else return [];
     }
 
+    //Collection Methods
+
+    
+
     //Math Methods
 
     // ex [1,2,3] => 1
