@@ -2,7 +2,7 @@
 function arrayRange(s, l){
     if(l === undefined){
         l=s;
-        s=0;
+        s=1;
     }
     if(typeof s === 'number' && typeof l === 'number'){
         var arr = new Array(l), i = 0;

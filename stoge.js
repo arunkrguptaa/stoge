@@ -93,7 +93,7 @@ module.exports = (function(){
 
     //Looping Methods
 
-    //map([1,2,3],e => e+2)  =>  [3,4,5]
+    //map([1,2,3], e => e+2)  =>  [3,4,5]
     function map(array, iteratee){
         var index = 0,
         length = array == null ? 0 : array.length,
@@ -104,7 +104,7 @@ module.exports = (function(){
         return result;
     }
     
-
+    //each([1,2,3], e => add(e+2)) => [3,4,5]
     function each(array, iteratee){
         var index = 0,
         length = array == null ? 0 : array.length,
@@ -180,7 +180,7 @@ module.exports = (function(){
     function arrayRange(s, l){
         if(l === undefined){
             l=s;
-            s=0;
+            s=1;
         }
         if(typeof s === 'number' && typeof l === 'number'){
             var arr = new Array(l), i = 0;
@@ -191,6 +191,20 @@ module.exports = (function(){
         }else return []
     }
 
+    // gcd(9,3) => 3
+    function gcd(x, y) {
+        if ((typeof x !== 'number') || (typeof y !== 'number')) 
+            return false;
+        x = Math.abs(x);
+        y = Math.abs(y);
+        while(y) {
+            var t = y;
+            y = x % y;
+            x = t;
+        }
+        return x;
+    }
+    
     //String Methods
 
     // ex 'abc@abc.org' => true
@@ -265,7 +279,7 @@ module.exports = (function(){
         : (str || '');
     }
 
-    // ex 'abc def ghi' => abc_def_ghi
+    // ex 'abc def ghi' => 'AbcDefGhi'
     function pascal(str){
         return (typeof str === 'string')
         ? map(str.trim().split(' '), (e,i) => capitalize(e)).join('')
@@ -354,6 +368,7 @@ module.exports = (function(){
         fToCelsius,
         cToFahrenheit,
         arrayRange,
+        gcd,
 
         //String methods namespace
         isMail,
