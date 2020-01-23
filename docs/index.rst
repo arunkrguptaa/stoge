@@ -360,12 +360,15 @@ stoge.csvToArray(string, delimiter, omitHeader)
     stoge.csvToArray('a,b\nc,d')
     // => '[[a,b], [c,d]]'
 
-stoge.csvToJson(string)
+stoge.csvToJson(string, delimeter)
 -----
 
 ``csvToJson`` method convert given csv format string into JSON format and can pass custom delimiter.
 
 .. code-block:: html
+
+    stoge.csvToJson('a,b\nc,d')
+    // => '{a: 'c', b: 'd'}'
 
     stoge.csvToJson('a,b\nc,d')
     // => '{a: 'c', b: 'd'}'
