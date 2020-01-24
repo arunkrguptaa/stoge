@@ -129,6 +129,39 @@ module.exports = (function(){
         return '#' + n.slice(0, 6);
     };
 
+    //ex base_convert('E164',16,8)  =>  160544
+    function baseConvert(num, init_base, change_base) {
+        if ((init_base && change_base) <2 || (init_base && change_base)>36)
+            return 'Base between 2 and 36';
+
+        return parseInt(num + '', init_base).toString(change_base);
+    }
+
+    // 110011 => 51
+    function binToDec(bstr) { 
+        return parseInt((bstr + '').replace(/[^01]/gi, ''), 2);
+    }
+
+    function decToBHO(n, base) {
+        if (n < 0) {
+            n = 0xFFFFFFFF + n + 1;
+        } 
+        switch (base)
+        {
+            case 'B':  
+                return parseInt(n, 10).toString(2);
+                break;  
+            case 'H':  
+                return parseInt(n, 10).toString(16);
+                break;  
+            case 'O':  
+                return parseInt(n, 10).toString(8);
+                break;  
+            default:  
+                return(n);  
+        }  
+    }
+
     //Number Methods
 
     // ex range(2,1,5) => true
@@ -344,6 +377,19 @@ module.exports = (function(){
             ).join('')
         }else (str || '')
     }
+
+    //subStr('stog') => ["s", "st", "sto", "stog", "t", "to", "tog", "o", "og", "g"]
+    function subStr(str){
+        if(typeof str === 'string'){
+            var subset = [];
+            for (var m = 0; m < str.length; m++){
+                for (var n = m+1; n<str.length+1; n++){
+                    subset.push(str.slice(m,n));
+                }
+            }
+            return subset;
+        }else (str || '')
+    }
     
     // namespace for stoge methods
     var stoge = {
@@ -361,6 +407,8 @@ module.exports = (function(){
         //Math methods namespace
         average,
         randomHexColorCode,
+        baseConvert,//
+        binToDec,//
 
         //Number methods namespace
         random,
@@ -388,7 +436,8 @@ module.exports = (function(){
         completeReverse,
         csvToArray,
         csvToJson,
-        swapCase 
+        swapCase,
+        subStr//
     };
     return stoge;
 

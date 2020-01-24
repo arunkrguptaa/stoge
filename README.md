@@ -1,12 +1,11 @@
 # stoge
 Utility library for common task in javascript
 
-[Site](https://stoge.com/) | (Upcomming) |
 [Docs](https://stoge.readthedocs.io/) |
 [Code of Conduct](https://js.foundation/community/code-of-conduct) |
 [Twitter](https://twitter.com/arunkrguptaa)
 
-The [Stoge] library is a utility library for common task in javascript.
+The [stoge] library is a utility library for common task in javascript.
 
 Generated using [stoge](https://www.npmjs.com/package/stoge):
 ```shell
