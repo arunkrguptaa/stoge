@@ -205,6 +205,60 @@ module.exports = (function(){
         return x;
     }
     
+    // lanczosGamma(6) => 120.00000000000021
+    function lanczosGamma(num){
+        if ((typeof x !== 'number') || (typeof y !== 'number')){
+            var p = [0.99999999999980993, 676.5203681218851, -1259.1392167224028,771.32342877765313, -176.61502916214059, 12.507343278686905, -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7],
+            i, g = 7;
+            if (num < 0.5) return Math.PI / (Math.sin(Math.PI * num) * calculus.LanczosGamma(1 - num));
+            num -= 1;
+            var a = p[0];
+            var t = num + g + 0.5;
+            for (i = 1; i < p.length; i++) {
+                a += p[i] / (num + i);
+            }
+            return Math.sqrt(2 * Math.PI) * Math.pow(t, num + 0.5) * Math.exp(-t) * a;
+        }else return NaN
+    }
+
+    //fallFactorial(6,2) => 30
+    function fallFactorial(n, k){
+        var i = (n - k + 1), r = 1;
+        if(n < 0) throw new Error("n must be positive.");
+        if(k > n) throw new Error("k cannot be greater than n.");
+        while (i <= n){
+            r *= i++;
+        }
+        return r;
+    }
+
+    //isHamming(7) => false
+    function isHamming(num) {
+        if(typeof n === 'number'){
+            while (num % 5 === 0) num /= 5;
+            while (num % 3 === 0) num /= 3;
+            while (num % 2 === 0) num /= 2;
+            return num == 1;
+        }else false;
+    }
+
+    //hamming(7) => [1,2,3,4,5,6,8]
+    function hamming(n) {
+        if(typeof n === 'number'){
+            var succession = [1];
+            var length = succession.length;
+            var candidate = 2;
+            while (length < n) {
+                if (isHamming(candidate)) {
+                    succession[length] = candidate;
+                    length++;
+                }
+                candidate++;
+            }
+            return succession;
+        }else (n || NaN)
+    }
+
     //String Methods
 
     // ex 'abc@abc.org' => true
@@ -369,6 +423,10 @@ module.exports = (function(){
         cToFahrenheit,
         arrayRange,
         gcd,
+        lanczosGamma,//
+        fallFactorial,//
+        isHamming,//
+        hamming,//
 
         //String methods namespace
         isMail,
@@ -388,7 +446,7 @@ module.exports = (function(){
         completeReverse,
         csvToArray,
         csvToJson,
-        swapCase 
+        swapCase
     };
     return stoge;
 
