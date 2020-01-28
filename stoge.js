@@ -2,6 +2,7 @@ module.exports = (function(){
     // Native variables
 
     // Method specific variables 
+    var version = '1.1.1';
     var mailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,6}$/;
     var htmlEntities = {
         '&': '&amp;',
@@ -19,7 +20,7 @@ module.exports = (function(){
     },
     htmlescapeRegex = /[&<>"']/g;
     var unescapeHtml = /&(?:amp|lt|gt|quot|#39);/g;
-    var UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    var UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', heep_len,
     LOWER = 'abcdefghijklmnopqrstuvwxyz';
 
     //Array Methods
@@ -50,6 +51,28 @@ module.exports = (function(){
             return arr;
         } else return arr;
     }
+    
+    // [1,2,3]+[4,5] => [5,7,3]
+    function arraySum(arr1, arr2){
+        if(arr1 && arr2 === undefined){
+            return arr1;
+        }
+        else if(isArray(arr1) && isArray(arr2)){
+            var i=0,len1= arr1.length,
+            len2= arr2.length,
+            maxLen = len1<len2 ? len2 : len1, final=[];
+            for(i;i<maxLen;i++){
+                final.push(
+                    ((arr1[i]) ? arr1[i] : ((typeof arr2[i] === 'number') ? 0 : '')) + 
+                    ((arr2[i]) ? arr2[i] : ((typeof arr1[i] === 'number') ? 0 : ''))
+                )
+            }
+            return final;
+        }
+        else return [];
+    }
+
+    //Searching or Sorting Methods
 
     // ex [1,2,3,4] => 4(3)
     function binarySearch(arr, val){
@@ -70,25 +93,80 @@ module.exports = (function(){
             return (arr[middle] != val) ? -1 : middle;
         } else return -1;
     }
-    
-    // [1,2,3]+[4,5] => [5,7,3]
-    function arraySum(arr1, arr2){
-        if(arr1 && arr2 === undefined){
-            return arr1;
-        }
-        else if(isArray(arr1) && isArray(arr2)){
-            var i=0,len1= arr1.length,
-            len2= arr2.length,
-            maxLen = len1<len2 ? len2 : len1, final=[];
-            for(i;i<maxLen;i++){
-                final.push(
-                    ((arr1[i]) ? arr1[i] : ((typeof arr2[i] === 'number') ? 0 : '')) + 
-                    ((arr2[i]) ? arr2[i] : ((typeof arr1[i] === 'number') ? 0 : ''))
-                )
+
+    //[9,4,6,2,8,1] => [1,2,4,6,8,9] 
+    function quickSort(arr) {
+        if (isArray(arr) && arr.length > 1) {
+            var left = [], right = [], newArray = [],
+            pivot = arr.pop();
+            for (var i = 0; i < arr.length; i++) {
+                (arr[i] <= pivot) ? left.push(arr[i]) : right.push(arr[i]);
+            }    
+            return newArray.concat(quickSort(left), pivot, quickSort(right));
+        } else return arr;
+    }
+
+    //[9,4,6,2,8,1] => [1,2,4,6,8,9] 
+    function mergeSort(left, right){
+        var i = 0, j = 0, results = [];
+        while (i < left.length || j < right.length) {
+            if (i === left.length) {
+                results.push(right[j]);
+                j++;
+            } else if (j === right.length || left[i] <= right[j]) {
+                results.push(left[i]);
+                i++;
+            } else {
+                results.push(right[j]);
+                j++;
             }
-            return final;
         }
-        else return [];
+        return results;
+    }
+
+    //[9,4,6,2,8,1] => [1,2,4,6,8,9]
+    function heap_root(input, i) {
+        var left = 2 * i + 1, 
+        right = 2 * i + 2,
+        max = i;
+        if (left < heep_len && input[left] > input[max]) max = left;
+        if (right < heep_len && input[right] > input[max]) max = right;
+        if (max != i){
+            swap(input, i, max);
+            heap_root(input, max);
+        }
+    }
+    function swap(input, index_A, index_B) {
+        var temp = input[index_A];
+        input[index_A] = input[index_B];
+        input[index_B] = temp;
+    }
+    function heapSort(input) {
+        heep_len = input.length;
+        for (var i = Math.floor(heep_len / 2); i >= 0; i -= 1)
+            heap_root(input, i);
+        for (i = input.length - 1; i > 0; i--) {
+            swap(input, 0, i);
+            heep_len--;
+            heap_root(input, 0);
+        }
+    }
+
+    //[9,4,6,2,8,1] => [1,2,4,6,8,9]
+    function insertionSort(arr){
+        for (var i = 1; i < arr.length; i++){
+            if (arr[i] < arr[0]) arr.unshift(arr.splice(i,1)[0]);
+            else if (arr[i] > arr[i-1]){
+                continue;
+            } else {
+                for (var j = 1; j < i; j++) {
+                    if (arr[i] > arr[j-1] && arr[i] < arr[j]){
+                        arr.splice(j,0,arr.splice(i,1)[0]);
+                    }
+                }
+            }
+        }
+        return arr;
     }
 
     //Looping Methods
@@ -393,12 +471,19 @@ module.exports = (function(){
     
     // namespace for stoge methods
     var stoge = {
+        version,
         //Array methods namespace
-        isArray,
+        isArray,    
         removeFalsy,
         shuffleArr,
-        binarySearch,
         arraySum,
+
+        //Searching or Sorting Methods
+        binarySearch,
+        quickSort,
+        mergeSort,
+        heapSort,//
+        insertionSort,//
 
         //Looping methods
         map,
@@ -407,8 +492,8 @@ module.exports = (function(){
         //Math methods namespace
         average,
         randomHexColorCode,
-        baseConvert,//
-        binToDec,//
+        baseConvert,
+        binToDec,
 
         //Number methods namespace
         random,
@@ -437,7 +522,7 @@ module.exports = (function(){
         csvToArray,
         csvToJson,
         swapCase,
-        subStr//
+        subStr
     };
     return stoge;
 
