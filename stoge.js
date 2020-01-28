@@ -125,7 +125,7 @@ module.exports = (function(){
     }
 
     //[9,4,6,2,8,1] => [1,2,4,6,8,9]
-    function heap_root(input, i) {
+    function heepRoot(input, i) {
         var left = 2 * i + 1, 
         right = 2 * i + 2,
         max = i;
@@ -133,7 +133,7 @@ module.exports = (function(){
         if (right < heep_len && input[right] > input[max]) max = right;
         if (max != i){
             swap(input, i, max);
-            heap_root(input, max);
+            heepRoot(input, max);
         }
     }
     function swap(input, index_A, index_B) {
@@ -144,11 +144,11 @@ module.exports = (function(){
     function heapSort(input) {
         heep_len = input.length;
         for (var i = Math.floor(heep_len / 2); i >= 0; i -= 1)
-            heap_root(input, i);
+            heepRoot(input, i);
         for (i = input.length - 1; i > 0; i--) {
             swap(input, 0, i);
             heep_len--;
-            heap_root(input, 0);
+            heepRoot(input, 0);
         }
     }
 
@@ -168,6 +168,32 @@ module.exports = (function(){
         }
         return arr;
     }
+    
+    //[1,5,4,2,6,90,45,32,12] => [1, 2, 4, 5, 6, 12, 32, 45, 90]
+    function selectionSort(arr, compare_Function) {
+        function compare(a, b) {
+            return a - b;
+        } 
+        var min = 0,
+        index = 0,
+        temp = 0;
+        compare_Function = compare_Function || compare;
+    
+        for (var i = 0; i < arr.length; i += 1) {
+            index = i;
+            min = arr[i];
+            for (var j = i + 1; j < arr.length; j += 1) {
+                if (compare_Function(min, arr[j]) > 0) {
+                    min = arr[j];
+                    index = j;
+                }
+            }
+            temp = arr[i];
+            arr[i] = min;
+            arr[index] = temp;
+        }
+        return arr;
+      }
 
     //Looping Methods
 
@@ -526,6 +552,7 @@ module.exports = (function(){
     // namespace for stoge methods
     var stoge = {
         version,
+        
         //Array methods namespace
         isArray,    
         removeFalsy,
@@ -536,8 +563,9 @@ module.exports = (function(){
         binarySearch,
         quickSort,
         mergeSort,
-        heapSort,//
-        insertionSort,//
+        heapSort,
+        insertionSort,
+        selectionSort,
 
         //Looping methods
         map,
