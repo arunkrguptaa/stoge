@@ -246,6 +246,13 @@ module.exports = (function(){
         return parseInt((bstr + '').replace(/[^01]/gi, ''), 2);
     }
 
+    // -1345 => -5431
+    function revNum(num) {
+        return (typeof num === 'number')
+        ? parseInt(num.toString().split('').reverse().join('')) * Math.sign(num)
+        : -1
+    }
+
     function decToBHO(n, base) {
         if (n < 0) {
             n = 0xFFFFFFFF + n + 1;
@@ -520,7 +527,7 @@ module.exports = (function(){
                 var values = v.split(deli);
                 return titles.reduce((obj, title, index) => ((obj[title] = values[index]), obj), {});
             });
-        }else (str || '')
+        }else return (str || '')
     }
     
     // ex  ADcfRD1231 => adCFrd1231
@@ -533,7 +540,7 @@ module.exports = (function(){
                 ? e.toUpperCase() 
                 : e
             ).join('')
-        }else (str || '')
+        }else return (str || '')
     }
 
     //subStr('stog') => ["s", "st", "sto", "stog", "t", "to", "tog", "o", "og", "g"]
@@ -546,7 +553,32 @@ module.exports = (function(){
                 }
             }
             return subset;
-        }else (str || '')
+        }else return (str || '')
+    }
+
+    // 'hello emily' => {h: 1, e: 2, l: 3, o: 1, " ": 1, …}
+    function charCount(str){
+        if(typeof str === 'string'){
+            var charMap = {};
+            for(char of str){
+                (charMap[char]) ? charMap[char]++ : charMap[char]=1
+            }
+            return charMap
+        }else return {}
+    }
+
+    // 'hello emily' => {h: 1, e: 2, l: 3, o: 1, " ": 1, …}
+    function maxChar(str){
+        var charMp = charCount(str),
+        max = 0,
+        max_char = '';
+        for(char in charMp){
+            if(charMp[char]>max){
+                max = charMp[char];
+                max_char = char;
+            }
+       }
+       return {'char': max_char, 'count': max}
     }
     
     // namespace for stoge methods
@@ -576,6 +608,7 @@ module.exports = (function(){
         randomHexColorCode,
         baseConvert,
         binToDec,
+        revNum,//
 
         //Number methods namespace
         random,
@@ -608,7 +641,9 @@ module.exports = (function(){
         csvToArray,
         csvToJson,
         swapCase,
-        subStr
+        subStr,
+        charCount,
+        maxChar
     };
     return stoge;
 
