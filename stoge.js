@@ -72,6 +72,18 @@ module.exports = (function(){
         else return [];
     }
 
+    //[1,2,3] => [[1,2],[3]]
+    function chunk(arr, num){
+        if(isArray(arr)){
+            var newarr = [], i=0;
+            while(i<arr.length){
+                newarr.push(arr.slice(i, i+num));
+                i += num;
+            }
+            return newarr;
+        } else return []
+    }
+
     //Searching or Sorting Methods
 
     // ex [1,2,3,4] => 4(3)
@@ -560,8 +572,8 @@ module.exports = (function(){
     function charCount(str){
         if(typeof str === 'string'){
             var charMap = {};
-            for(char of str){
-                (charMap[char]) ? charMap[char]++ : charMap[char]=1
+            for(char of str.replace(/[^\w]/g, '').toLowerCase()){
+                charMap[char] = charMap[char] + 1 || 1;
             }
             return charMap
         }else return {}
@@ -580,6 +592,43 @@ module.exports = (function(){
        }
        return {'char': max_char, 'count': max}
     }
+
+    // 'Hello There' => "eeehhllort"
+    function cleanStr(str){
+        if(typeof str === 'string'){
+            return str.replace(/[^\w]/g, '').toLowerCase().split('').sort().join('');
+        }
+    }
+
+    //'rail safety','fairy tales' => true
+    // function anagramByCharCount(astr, bstr){
+    //     if(typeof astr === 'string' && typeof bstr === 'string'){
+    //         var aChar = charCount(astr),
+    //         bChar = charCount(bstr);
+
+    //         if(Object.keys(aChar).length !== Object.keys(bChar).length) return false;
+            
+    //         for(var char in aChar){
+    //             if(aChar[char] !== bChar[char]) return false;
+    //         }
+    //         return true;
+    //     }else return false;
+    // }
+
+    //'rail safety','fairy tales' => true
+    function anagram(aStr, bStr){
+        if(typeof aStr === 'string' && typeof bStr === 'string'){
+            return (cleanStr(aStr) === cleanStr(bStr));
+        }else return false;
+    }
+    
+    //hello => 2
+    function vowels(str){
+        if(typeof str === 'string'){
+            var matches = str.match(/[aeiou]/gi);
+            return matches ? matches.length : 0;
+        }else return false;
+    }
     
     // namespace for stoge methods
     var stoge = {
@@ -590,6 +639,7 @@ module.exports = (function(){
         removeFalsy,
         shuffleArr,
         arraySum,
+        chunk,//
 
         //Searching or Sorting Methods
         binarySearch,
@@ -642,8 +692,11 @@ module.exports = (function(){
         csvToJson,
         swapCase,
         subStr,
-        charCount,
-        maxChar
+        charCount,//
+        maxChar,//
+        cleanStr,//
+        anagram,//
+        vowels,//
     };
     return stoge;
 
