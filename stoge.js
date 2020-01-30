@@ -2,6 +2,7 @@ module.exports = (function(){
     // Native variables
 
     // Method specific variables 
+    var version = '1.1.1';
     var mailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,6}$/;
     var htmlEntities = {
         '&': '&amp;',
@@ -19,7 +20,7 @@ module.exports = (function(){
     },
     htmlescapeRegex = /[&<>"']/g;
     var unescapeHtml = /&(?:amp|lt|gt|quot|#39);/g;
-    var UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    var UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', heep_len,
     LOWER = 'abcdefghijklmnopqrstuvwxyz';
 
     //Array Methods
@@ -50,24 +51,6 @@ module.exports = (function(){
             return arr;
         } else return arr;
     }
-
-    // ex [1,2,3,4] => 4(3)
-    function binarySearch(arr, val){
-        if(isArray(arr) && val){
-            var first  = 0,
-            last   = arr.length - 1,
-            middle = Math.floor((last + first)/2);
-            while(arr[middle] != val && first < last){
-                if(val < arr[middle]){
-                    last = middle - 1;
-                } else if(val > arr[middle]){
-                    first = middle + 1;
-                }
-                middle = Math.floor((last + first)/2);
-            }
-            return (arr[middle] != val) ? -1 : middle;
-        } else return -1;
-    }
     
     // [1,2,3]+[4,5] => [5,7,3]
     function arraySum(arr1, arr2){
@@ -88,6 +71,139 @@ module.exports = (function(){
         }
         else return [];
     }
+
+    //[1,2,3] => [[1,2],[3]]
+    function chunk(arr, num){
+        if(isArray(arr)){
+            var newarr = [], i=0;
+            while(i<arr.length){
+                newarr.push(arr.slice(i, i+num));
+                i += num;
+            }
+            return newarr;
+        } else return []
+    }
+
+    //Searching or Sorting Methods
+
+    // ex [1,2,3,4] => 4(3)
+    function binarySearch(arr, val){
+        if(isArray(arr) && val){
+            var first  = 0,
+            last   = arr.length - 1,
+            middle = Math.floor((last + first)/2);
+            while(arr[middle] != val && first < last){
+                if(val < arr[middle]){
+                    last = middle - 1;
+                } else if(val > arr[middle]){
+                    first = middle + 1;
+                }
+                middle = Math.floor((last + first)/2);
+            }
+            return (arr[middle] != val) ? -1 : middle;
+        } else return -1;
+    }
+
+    //[9,4,6,2,8,1] => [1,2,4,6,8,9] 
+    function quickSort(arr) {
+        if (isArray(arr) && arr.length > 1) {
+            var left = [], right = [], newArray = [],
+            pivot = arr.pop();
+            for (var i = 0; i < arr.length; i++) {
+                (arr[i] <= pivot) ? left.push(arr[i]) : right.push(arr[i]);
+            }    
+            return newArray.concat(quickSort(left), pivot, quickSort(right));
+        } else return arr;
+    }
+
+    //[9,4,6,2,8,1] => [1,2,4,6,8,9] 
+    function mergeSort(left, right){
+        var i = 0, j = 0, results = [];
+        while (i < left.length || j < right.length) {
+            if (i === left.length) {
+                results.push(right[j]);
+                j++;
+            } else if (j === right.length || left[i] <= right[j]) {
+                results.push(left[i]);
+                i++;
+            } else {
+                results.push(right[j]);
+                j++;
+            }
+        }
+        return results;
+    }
+
+    //[9,4,6,2,8,1] => [1,2,4,6,8,9]
+    function heepRoot(input, i) {
+        var left = 2 * i + 1, 
+        right = 2 * i + 2,
+        max = i;
+        if (left < heep_len && input[left] > input[max]) max = left;
+        if (right < heep_len && input[right] > input[max]) max = right;
+        if (max != i){
+            swap(input, i, max);
+            heepRoot(input, max);
+        }
+    }
+    function swap(input, index_A, index_B) {
+        var temp = input[index_A];
+        input[index_A] = input[index_B];
+        input[index_B] = temp;
+    }
+    function heapSort(input) {
+        heep_len = input.length;
+        for (var i = Math.floor(heep_len / 2); i >= 0; i -= 1)
+            heepRoot(input, i);
+        for (i = input.length - 1; i > 0; i--) {
+            swap(input, 0, i);
+            heep_len--;
+            heepRoot(input, 0);
+        }
+    }
+
+    //[9,4,6,2,8,1] => [1,2,4,6,8,9]
+    function insertionSort(arr){
+        for (var i = 1; i < arr.length; i++){
+            if (arr[i] < arr[0]) arr.unshift(arr.splice(i,1)[0]);
+            else if (arr[i] > arr[i-1]){
+                continue;
+            } else {
+                for (var j = 1; j < i; j++) {
+                    if (arr[i] > arr[j-1] && arr[i] < arr[j]){
+                        arr.splice(j,0,arr.splice(i,1)[0]);
+                    }
+                }
+            }
+        }
+        return arr;
+    }
+    
+    //[1,5,4,2,6,90,45,32,12] => [1, 2, 4, 5, 6, 12, 32, 45, 90]
+    function selectionSort(arr, compare_Function) {
+        function compare(a, b) {
+            return a - b;
+        } 
+        var min = 0,
+        index = 0,
+        temp = 0;
+        compare_Function = compare_Function || compare;
+    
+        for (var i = 0; i < arr.length; i += 1) {
+            index = i;
+            min = arr[i];
+            for (var j = i + 1; j < arr.length; j += 1) {
+                if (compare_Function(min, arr[j]) > 0) {
+                    min = arr[j];
+                    index = j;
+                }
+            }
+            temp = arr[i];
+            arr[i] = min;
+            arr[index] = temp;
+        }
+        return arr;
+      }
 
     //Looping Methods
 
@@ -138,6 +254,13 @@ module.exports = (function(){
     // 110011 => 51
     function binToDec(bstr) { 
         return parseInt((bstr + '').replace(/[^01]/gi, ''), 2);
+    }
+
+    // -1345 => -5431
+    function revNum(num) {
+        return (typeof num === 'number')
+        ? parseInt(num.toString().split('').reverse().join('')) * Math.sign(num)
+        : -1
     }
 
     function decToBHO(n, base) {
@@ -414,7 +537,7 @@ module.exports = (function(){
                 var values = v.split(deli);
                 return titles.reduce((obj, title, index) => ((obj[title] = values[index]), obj), {});
             });
-        }else (str || '')
+        }else return (str || '')
     }
     
     // ex  ADcfRD1231 => adCFrd1231
@@ -427,7 +550,7 @@ module.exports = (function(){
                 ? e.toUpperCase() 
                 : e
             ).join('')
-        }else (str || '')
+        }else return (str || '')
     }
 
     //subStr('stog') => ["s", "st", "sto", "stog", "t", "to", "tog", "o", "og", "g"]
@@ -440,17 +563,89 @@ module.exports = (function(){
                 }
             }
             return subset;
-        }else (str || '')
+        }else return (str || '')
+    }
+
+    // 'hello emily' => {h: 1, e: 2, l: 3, o: 1, " ": 1, …}
+    function charCount(str){
+        if(typeof str === 'string'){
+            var charMap = {};
+            for(char of str.replace(/[^\w]/g, '').toLowerCase()){
+                charMap[char] = charMap[char] + 1 || 1;
+            }
+            return charMap
+        }else return {}
+    }
+
+    // 'hello emily' => {h: 1, e: 2, l: 3, o: 1, " ": 1, …}
+    function maxChar(str){
+        var charMp = charCount(str),
+        max = 0,
+        max_char = '';
+        for(char in charMp){
+            if(charMp[char]>max){
+                max = charMp[char];
+                max_char = char;
+            }
+       }
+       return {'char': max_char, 'count': max}
+    }
+
+    // 'Hello There' => "eeehhllort"
+    function cleanStr(str){
+        if(typeof str === 'string'){
+            return str.replace(/[^\w]/g, '').toLowerCase().split('').sort().join('');
+        }
+    }
+
+    //'rail safety','fairy tales' => true
+    // function anagramByCharCount(astr, bstr){
+    //     if(typeof astr === 'string' && typeof bstr === 'string'){
+    //         var aChar = charCount(astr),
+    //         bChar = charCount(bstr);
+
+    //         if(Object.keys(aChar).length !== Object.keys(bChar).length) return false;
+            
+    //         for(var char in aChar){
+    //             if(aChar[char] !== bChar[char]) return false;
+    //         }
+    //         return true;
+    //     }else return false;
+    // }
+
+    //'rail safety','fairy tales' => true
+    function anagram(aStr, bStr){
+        if(typeof aStr === 'string' && typeof bStr === 'string'){
+            return (cleanStr(aStr) === cleanStr(bStr));
+        }else return false;
+    }
+    
+    //hello => 2
+    function vowels(str){
+        if(typeof str === 'string'){
+            var matches = str.match(/[aeiou]/gi);
+            return matches ? matches.length : 0;
+        }else return false;
     }
     
     // namespace for stoge methods
     var stoge = {
+        version,
+        
         //Array methods namespace
-        isArray,
+        isArray,    
         removeFalsy,
         shuffleArr,
-        binarySearch,
         arraySum,
+        chunk,//
+
+        //Searching or Sorting Methods
+        binarySearch,
+        quickSort,
+        mergeSort,
+        heapSort,
+        insertionSort,
+        selectionSort,
 
         //Looping methods
         map,
@@ -459,8 +654,9 @@ module.exports = (function(){
         //Math methods namespace
         average,
         randomHexColorCode,
-        baseConvert,//
-        binToDec,//
+        baseConvert,
+        binToDec,
+        revNum,//
 
         //Number methods namespace
         random,
@@ -493,7 +689,12 @@ module.exports = (function(){
         csvToArray,
         csvToJson,
         swapCase,
-        subStr//
+        subStr,
+        charCount,//
+        maxChar,//
+        cleanStr,//
+        anagram,//
+        vowels,//
     };
     return stoge;
 
