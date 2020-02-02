@@ -265,12 +265,10 @@ module.exports = (function(){
         : -1
     }
 
+    // 5 => "101"
     function decToBHO(n, base) {
-        if (n < 0) {
-            n = 0xFFFFFFFF + n + 1;
-        } 
-        switch (base)
-        {
+        if (n < 0) n = 0xFFFFFFFF + n + 1;
+        switch (base){
             case 'B':  
                 return parseInt(n, 10).toString(2);
                 break;  
@@ -658,7 +656,8 @@ module.exports = (function(){
         randomHexColorCode,
         baseConvert,
         binToDec,
-        revNum,//
+        revNum,
+        decToBHO,
 
         //Number methods namespace
         random,
@@ -692,11 +691,11 @@ module.exports = (function(){
         csvToJson,
         swapCase,
         subStr,
-        charCount,//
-        maxChar,//
-        cleanStr,//
-        anagram,//
-        vowels,//
+        charCount,
+        maxChar,
+        cleanStr,
+        anagram,
+        vowels,
     };
     return stoge;
 
