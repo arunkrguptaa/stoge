@@ -1,6 +1,6 @@
 {
   "name": "stoge",
-  "version": "1.2.6",
+  "version": "1.3.1",
   "description": "utility library for common tasks in javascript",
   "main": "stoge.js",
   "scripts": {
@@ -11,6 +11,7 @@
     "url": "git+https://github.com/arunkrguptaa/stoge.git"
   },
   "keywords": [
+    "javascript-tool",
     "utility-library",
     "javascript",
     "stogejs",
