@@ -567,8 +567,9 @@ module.exports = (function(){
     // 'hello emily' => {h: 1, e: 2, l: 3, o: 1, " ": 1, …}
     function charCount(str){
         if(typeof str === 'string'){
-            var charMap = {};
-            for(char of str.replace(/[^\w]/g, '').toLowerCase()){
+            var charMap = {},
+            newStr = str.replace(/[^\w]/g, '').toLowerCase()
+            for(char of newStr){
                 charMap[char] = charMap[char] + 1 || 1;
             }
             return charMap
@@ -635,7 +636,7 @@ module.exports = (function(){
         removeFalsy,
         shuffleArr,
         arraySum,
-        chunk,//
+        chunk,
 
         //Searching or Sorting Methods
         binarySearch,
