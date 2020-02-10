@@ -2,7 +2,7 @@ module.exports = (function(){
     // Native variables
 
     // Method specific variables 
-    var version = '1.3.1';
+    var version = '1.4.4';
     var mailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,6}$/;
     var htmlEntities = {
         '&': '&amp;',
@@ -27,7 +27,9 @@ module.exports = (function(){
 
     // ex [1,2,3] => true
     function isArray(arr) {
-        return (toString.call(arr) === '[object Array]') ? true : false
+        return (toString.call(arr) === '[object Array]')
+        ? true
+        : false
     }
     
     // ex stoge.removeFalsy([1,'',2,false,3]) => [1,2,3]
@@ -82,6 +84,13 @@ module.exports = (function(){
             }
             return newarr;
         } else return []
+    }
+    
+    //[10, [90, 80], [5, [1, [69, [61, 15]]], 19]] => [10, 90, 80, 5, 1, 69, 61, 15, 19]
+    function flatarr(arr){
+        return (arr.some(e => isArray(e)))
+            ? flatarr([].concat(...arr))
+            : arr
     }
 
     //[1,2,'f',3,'c'] => {num: [1, 2, 3], str: ["f", "c"]}
@@ -660,6 +669,7 @@ module.exports = (function(){
         shuffleArr,
         arraySum,
         chunk,
+        flatarr,
         distinct,
         rotate,
 
