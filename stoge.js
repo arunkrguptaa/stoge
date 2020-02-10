@@ -84,6 +84,29 @@ module.exports = (function(){
         } else return []
     }
 
+    //[1,2,'f',3,'c'] => {num: [1, 2, 3], str: ["f", "c"]}
+    function distinct(arr){
+        if(isArray(arr)){
+            var i=0, num=[], str=[];
+            for(i; i<arr.length; i++){
+                typeof arr[i] === 'number' ? num.push(arr[i]) : str.push(arr[i])
+            }
+            return {num,str};
+        }else return arr
+    }
+
+    //
+    function rotate(arr,p){
+        if(isArray(arr)){
+            let temp = arr.splice(0);
+            for (let i = 0; i < p - 1; i++){
+                let first = temp.shift();
+                temp.push(first);
+            }
+            return temp;
+        }else return arr
+    }
+
     //Searching or Sorting Methods
 
     // ex [1,2,3,4] => 4(3)
@@ -423,7 +446,7 @@ module.exports = (function(){
     }
 
     // ex - lower => l o w e r
-    function distinct(str){
+    function spaceStr(str){
         return (typeof str === 'string') 
         ? str.split('').join(' ').trim()
         : (str || '');
@@ -637,6 +660,8 @@ module.exports = (function(){
         shuffleArr,
         arraySum,
         chunk,
+        distinct,
+        rotate,
 
         //Searching or Sorting Methods
         binarySearch,
@@ -672,7 +697,7 @@ module.exports = (function(){
 
         //String methods namespace
         isMail,
-        distinct,
+        spaceStr,
         mediochar,
         specialChar,
         nonASCII,
