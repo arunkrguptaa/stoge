@@ -104,7 +104,7 @@ module.exports = (function(){
         }else return arr
     }
 
-    //
+    // rotate([1,2,3,4,5],3) => [3,4,5,1,2]
     function rotate(arr,p){
         if(isArray(arr)){
             let temp = arr.splice(0);
@@ -275,7 +275,7 @@ module.exports = (function(){
         return '#' + n.slice(0, 6);
     };
 
-    //ex base_convert('E164',16,8)  =>  160544
+    //ex baseConvert('E164',16,8)  =>  160544
     function baseConvert(num, init_base, change_base) {
         if ((init_base && change_base) <2 || (init_base && change_base)>36)
             return 'Base between 2 and 36';
@@ -608,7 +608,7 @@ module.exports = (function(){
         }else return {}
     }
 
-    // 'hello emily' => {h: 1, e: 2, l: 3, o: 1, " ": 1, …}
+    // 'hello emily' => {char: "l", count: 3}
     function maxChar(str){
         var charMp = charCount(str),
         max = 0,
