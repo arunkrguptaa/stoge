@@ -109,8 +109,7 @@ module.exports = (function(){
         if(isArray(arr)){
             let temp = arr.splice(0);
             for (let i = 0; i < p - 1; i++){
-                let first = temp.shift();
-                temp.push(first);
+                temp.push(temp.shift());
             }
             return temp;
         }else return arr
@@ -671,7 +670,7 @@ module.exports = (function(){
         chunk,
         flatarr,
         distinct,
-        rotate,
+        rotate,//
 
         //Searching or Sorting Methods
         binarySearch,
