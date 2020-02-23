@@ -72,6 +72,54 @@ stoge.arraySum(array, array)
     stoge.arraySum([1,2,3,4],[5,6,7,8,'a','c',9])
     // => [6,8,10,12,'a','c',9]
 
+stoge.chunk(array, number)
+-----
+
+``chunk`` method break given array by given chunk number from second parameter. 
+
+.. code-block:: html
+
+    stoge.chunk([1,2,3],2)
+    // => [[1,2],[3]]
+
+    stoge.chunk(['a','b','c','d','e'],3)
+    // => [['a','b','c'],['d','e']]
+
+stoge.flatarr(array)
+-----
+
+``flatarr`` method returns given nested array into single array.
+
+.. code-block:: html
+
+    stoge.flatarr([10, [90, 80], [5, [1, [69, [61, 15]]], 19]])
+    // => [10, 90, 80, 5, 1, 69, 61, 15, 19]
+
+    stoge.flatarr(['a',['b',['c']],['d','e']])
+    // => ["a", "b", "c", "d", "e"]
+
+stoge.distinct(array)
+-----
+
+``distinct`` method diffrentiate given array value by their type and retun an object of type with their respective value.
+
+.. code-block:: html
+
+    stoge.distinct([1,2,'f',3,'c'])
+    // => {num: [1, 2, 3], str: ["f", "c"]}
+
+stoge.rotate(array, number)
+-----
+
+``rotate`` method perform left rotation of given array upto given position in number.
+
+.. code-block:: html
+
+    stoge.rotate([1,2,3,4,5],3)
+    // => [3,4,5,1,2]
+
+
+
 Math Methods
 =======
 
@@ -104,6 +152,46 @@ stoge.randomHexColorCode()
     randomHexColorCode()
     // => #FFddcc
 
+stoge.baseConvert(num, init_base, change_base)
+-----
+
+``baseConvert`` method convert given string to any given base value.
+
+.. code-block:: html
+
+    stoge.baseConvert('E164',16,8)
+    // => 160544
+
+stoge.binToDec(number)
+-----
+
+``binToDec`` method convert binary value to decimal.
+
+.. code-block:: html
+
+    stoge.binToDec(110011)
+    // => 51
+
+stoge.revNum(number)
+-----
+
+``revNum`` method reverse the given number with their sign.
+
+.. code-block:: html
+
+    stoge.revNum(-1345)
+    // => -5431
+
+stoge.decToBHO(number)
+-----
+
+``decToBHO`` method convert given argument into their respective give base value of Binary, Hex or Octal and second argument would be like for binary 'B', hex 'H', octal 'O'.
+
+.. code-block:: html
+
+    stoge.decToBHO(5)
+    // => 101
+    
 Number Methods
 =======
 
@@ -187,6 +275,55 @@ stoge.gcd(number, number)
 
     stoge.gcd(10,5)
     // => 5
+
+stoge.lanczosGamma(number)
+-----
+
+``lanczosGamma`` method is used for computing the gamma function numerically.
+
+.. code-block:: html
+
+    stoge.lanczosGamma(6)
+    // => 120.00000000000021
+
+    stoge.lanczosGamma(1)
+    // => 0.9999999999999998
+
+stoge.fallFactorial(number, number)
+-----
+
+``fallFactorial`` method takes to arguments and retuns fallFactorial.
+
+.. code-block:: html
+
+    stoge.fallFactorial(6,2)
+    // => 30
+
+    stoge.fallFactorial(1)
+    // => 0.9999999999999998
+
+stoge.isHamming(number)
+-----
+
+``isHamming`` method tells if number is hamming or not.
+
+.. code-block:: html
+
+    stoge.isHamming(7)
+    // => false
+
+    stoge.isHamming(6)
+    // => true
+
+stoge.hamming(number)
+-----
+
+``hamming`` method returns array of hamming number upto given length
+
+.. code-block:: html
+
+    stoge.hamming(7)
+    // => [1,2,3,4,5,6,8]
 
 String Methods
 =======
@@ -382,3 +519,64 @@ stoge.swapCase(string)
 
     stoge.swapCase('ADcfRD1231')
     // => 'adCFrd1231'
+
+stoge.subStr(string)
+-----
+
+``subStr`` method retun all sub string of given string.
+
+.. code-block:: html
+
+    stoge.subStr('stog')
+    // => '["s", "st", "sto", "stog", "t", "to", "tog", "o", "og", "g"]'
+
+stoge.charCount(string)
+-----
+
+``charCount`` method count each character available in string and returns occurances.
+
+.. code-block:: html
+
+    stoge.charCount('hello emily')
+    // => '{h: 1, e: 2, l: 3, o: 1, " ": 1, …}'
+
+stoge.maxChar(string)
+-----
+
+``maxChar`` method returns the object of the maximum count of character.
+
+.. code-block:: html
+
+    stoge.maxChar('hello emily')
+    // => '{char: "l", count: 3}'
+
+stoge.cleanStr(string)
+-----
+
+``cleanStr`` method returns raw characters in alphabetical order of any given string.
+
+.. code-block:: html
+
+    stoge.cleanStr('Hello There')
+    // => 'eeehhllort'
+
+stoge.anagram(aStr, bStr)
+-----
+
+``anagram`` method returns boolean value true if both given string's characters are matched else returns false.
+
+.. code-block:: html
+
+    stoge.anagram('rail safety','fairy tales')
+    // => 'true'
+
+stoge.vowels(str)
+-----
+
+``vowels`` method returns count of total vowels available in the given string.
+
+.. code-block:: html
+
+    stoge.vowels('hello')
+    // => '2'
+    
