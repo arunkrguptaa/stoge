@@ -2,7 +2,7 @@ module.exports = (function(){
     // Native variables
 
     // Method specific variables 
-    var version = '1.4.4';
+    var version = '1.4.5';
     var mailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,6}$/;
     var htmlEntities = {
         '&': '&amp;',
