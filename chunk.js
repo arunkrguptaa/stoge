@@ -1,3 +1,5 @@
+var isArray = require('./isArray');
+
 //[1,2,3] => [[1,2],[3]]
 function chunk(arr, num){
     if(isArray(arr)){
