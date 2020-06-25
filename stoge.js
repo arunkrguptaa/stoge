@@ -657,7 +657,38 @@ module.exports = (function(){
             return matches ? matches.length : 0;
         }else return false;
     }
+
+    //"11000111010101101", 2 => 3
+    function countBinary(str, cutive){
+        let count = 0;
+        let sum = 0;
+        str.split('').map(e => {
+            if(+e>0){
+                count++;
+                if(count>1 && count === cutive){
+                    sum += parseInt(count/cutive);
+                    count=0;
+                }
+            }else{
+                count = 0;
+            }
+        })
+        return sum;
+    }
     
+    //debounce(e=>console.log('event'),2000)
+    function debounce(fn, delay){
+        var timeout;
+        return function(...args){
+            if(timeout){
+                clearTimeout(timeout);
+            }
+            timeout = setTimeout(() => {
+                fn(...args)
+            },delay);
+        }
+    }
+
     // namespace for stoge methods
     var stoge = {
         version,
@@ -729,6 +760,10 @@ module.exports = (function(){
         cleanStr,
         anagram,
         vowels,
+        countBinary,
+
+        //function 
+        debounce,
     };
     return stoge;
 
